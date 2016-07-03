@@ -1,6 +1,7 @@
 import sqlite3, unittest
 from .helpers import get_sql_results
-from query import Query
+from ..sqlent.query import Query
+from ..test import db_path
 
 conn = None
 
@@ -8,7 +9,7 @@ def setup_module(module):
     global conn
     print ("") # this is to get a newline after the dots
     print ("getting connection")
-    conn = sqlite3.connect('test-chinook.db')
+    conn = sqlite3.connect(db_path)
 
 def teardown_module(module):
     print ("closing connection")
@@ -16,7 +17,7 @@ def teardown_module(module):
 
 def test_select_all():
     results = get_sql_results(conn, Query().select().table('Artist').to_string())
-    assert(len(results)==106)
+    assert(len(results)==275)
     assert('Jimi' in results[93][1])
 
 
@@ -47,10 +48,10 @@ class TestSelectWhereIndividually(unittest.TestCase):
         self.assertTrue('AC/DC' in results[0][1])
 
     def test_greater(self):
-        query = Query().select().table('Artist').where('ArtistId', '>', 105)
+        query = Query().select().table('Artist').where('ArtistId', '>', 274)
         results = get_sql_results(conn, query.to_string())
         self.assertEqual(len(results),1)
-        self.assertTrue('Mot' in results[0][1])
+        self.assertTrue('Philip' in results[0][1])
 
     def test_not_in(self):
         query = Query().select().table('Artist').where_not('Name', 'in', ['AC/DC', 'Jimi Hendrix'])

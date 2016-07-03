@@ -1,4 +1,4 @@
-from helpers import proper_where_value
+from ..sqlent.helpers import proper_where_value
 import unittest
 
 class TestProperWhereValue(unittest.TestCase):

@@ -1,5 +1,5 @@
 from functools import wraps
-from helpers import proper_where_value, where_as_string
+from .helpers import proper_where_value, where_as_string
 
 def newobj(method):
     @wraps(method)
@@ -36,7 +36,7 @@ class Query(object):
         assert(self._query_type is not None)
         assert(self._table is not None)
         if (self._query_type == 'SELECT'):
-            query = 'SELECT {cols} from {table}'.format(
+            query = 'SELECT {cols} FROM {table}'.format(
                 cols = self.cols_to_string(),
                 table = self._table )
         if (len(self._where_as_string_list) < 1):
